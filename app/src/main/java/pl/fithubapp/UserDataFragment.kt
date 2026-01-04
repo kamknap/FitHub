@@ -124,12 +124,11 @@ class UserDataFragment : Fragment(R.layout.fragment_user_data) {
             val roundedBMR = String.format("%.0f", bmr)
             tvBMRResult.apply {
                 visibility = View.VISIBLE
-                text = "Twoje dzienne zapotrzebowanie kaloryczne wynosi około: $roundedBMR kcal"
+                text = "Twoja podstawowa przemiana materii (BMR) wynosi około: $roundedBMR kcal"
             }
         }
     }
 
-    //Picker methods
     private fun showWeightPicker() {
         showNumberPicker(
             title = "Wybierz wagę (kg)",
