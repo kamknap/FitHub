@@ -196,11 +196,9 @@ class UserWeightFragment : Fragment(R.layout.fragment_user_weight) {
         val etWeight = view.findViewById<com.google.android.material.textfield.TextInputEditText>(R.id.etWeight)
         val tvDate = view.findViewById<TextView>(R.id.tvDate)
 
-        // Ustaw aktualną datę
         val currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy"))
         tvDate.text = currentDate
 
-        // Walidacja do 1 kropki i jednej cyfry po kropce
         etWeight.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
@@ -256,16 +254,13 @@ class UserWeightFragment : Fragment(R.layout.fragment_user_weight) {
             try {
                 val currentUser = NetworkModule.api.getCurrentUser()
 
-                // Oblicz całkowitą utratę wagi od początku wyzwania
                 val userProgress = NetworkModule.api.getUserProgress()
                 val activeChallenge = userProgress.activeChallenges
                 
                 if (activeChallenge != null) {
-                    // Pobierz historię wagi, aby znaleźć wagę początkową
                     val weightHistory = NetworkModule.api.getUserWeightHistory()
                     val challengeStartDate = java.time.ZonedDateTime.parse(activeChallenge.startedDate)
                     
-                    // Znajdź pierwszą wagę od lub przed rozpoczęciem wyzwania
                     val startWeight = weightHistory
                         .sortedBy { it.measuredAt }
                         .lastOrNull { 
@@ -274,7 +269,6 @@ class UserWeightFragment : Fragment(R.layout.fragment_user_weight) {
                         }?.weightKg ?: currentUser.profile.weightKg
                     
                     val totalWeightLoss = startWeight - weight
-                    // Przekazujemy całkowitą utratę wagi (może być ujemna jeśli przytyliśmy)
                     ChallengeManager.checkChallengeProgress(ChallengeType.WEIGHT_LOSS, totalWeightLoss)
                 }
 
