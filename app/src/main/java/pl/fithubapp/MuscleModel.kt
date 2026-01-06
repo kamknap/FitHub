@@ -95,7 +95,6 @@ class MuscleModel : AppCompatActivity() {
         fun onPathClicked(id: String) {
             runOnUiThread {
                 Toast.makeText(this@MuscleModel, "Kliknięto w: $id", Toast.LENGTH_SHORT).show()
-                // obsluga kilkniecia
             }
         }
     }

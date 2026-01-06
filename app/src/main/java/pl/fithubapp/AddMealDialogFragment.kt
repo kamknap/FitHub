@@ -54,8 +54,6 @@ class AddMealDialogFragment : DialogFragment() {
         if(result.contents != null){
             searchByBarcode(result.contents)
         }
-        // Jeśli result.contents == null, użytkownik po prostu cofnął się ze skanera
-        // Nie pokazujemy żadnego toast-a w tym przypadku
     }
 
 
@@ -71,10 +69,8 @@ class AddMealDialogFragment : DialogFragment() {
         val tilSearch = mainLayout.findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.tilSearch)
         llLoadingIndicator = mainLayout.findViewById(R.id.llLoadingIndicator)
         
-        // Ustaw hint dla wyszukiwania
         tilSearch.hint = "Wyszukaj produkt..."
 
-        // Przycisk skanera kodów kreskowych
         val btnScanner = Button(requireContext()).apply {
             text = "Zeskanuj kod kreskowy"
             setTextColor(resources.getColor(R.color.white, null))
@@ -102,7 +98,6 @@ class AddMealDialogFragment : DialogFragment() {
             }
         }
 
-        // Przycisk dodawania własnego produktu
         val btnAddOwnProduct = Button(
             ContextThemeWrapper(requireContext(), R.style.Widget_Fithub_Button_Outlined),
             null,
@@ -125,10 +120,8 @@ class AddMealDialogFragment : DialogFragment() {
 
         etSearch.doAfterTextChanged { text ->
             val query = text.toString().trim()
-            //anulowanie poprzedniego wyszukiwania
             searchJob?.cancel()
             if (query.length >= 2) {
-                // Pokaż wskaźnik ładowania
                 showLoading(true)
                 llSearchResults.removeAllViews()
 //                opoznienie 500ms przed wyszukiwaniem
@@ -189,7 +182,6 @@ class AddMealDialogFragment : DialogFragment() {
                         "$nameKey|$brandKey|$kcalKey"
                     }
 
-                // Ukryj wskaźnik ładowania
                 showLoading(false)
                 container.removeAllViews()
 
@@ -227,7 +219,6 @@ class AddMealDialogFragment : DialogFragment() {
             catch(e: Exception) {
                 showLoading(false)
                 
-                // Ignorowanie CancellationException
                 if (e is CancellationException) {
                     Log.d("AddMealDialog", "Wyszukiwanie anulowane")
                     return@launch

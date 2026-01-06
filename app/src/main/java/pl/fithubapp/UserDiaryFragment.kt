@@ -40,7 +40,6 @@ import kotlin.math.roundToInt
 class UserDiaryFragment : Fragment(R.layout.fragment_user_diary), AddMealDialogFragment.OnMealAddedListener {
 
     companion object {
-        // Mapa do przechowywania stanów posiłków (zwinięte niezwinięte) między nawigacją
         private val sectionStates = mutableMapOf<Int, Boolean>()
     }
 

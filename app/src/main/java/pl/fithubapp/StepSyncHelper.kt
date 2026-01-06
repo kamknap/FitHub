@@ -75,10 +75,6 @@ object StepSyncHelper {
 
             NetworkModule.api.addMeal(LocalDate.now().toString(), AddMealDto(meal = mealDto))
 
-            // TODO: Rozważyć dodanie punktów za kroki (np. tylko dla >10k kroków)
-            // PointsManager.addPoints(PointsManager.ActionType.TRAINING)
-            // ChallengeManager.checkChallengeProgress(ChallengeType.TRAINING_COUNT, 1.0)
-
             Result.success("Zsynchronizowano $steps kroków (${caloriesBurned.toInt()} kcal)")
         } catch (e: Exception) {
             Result.failure(e)

@@ -101,7 +101,6 @@ class EditProfileDialogFragment : DialogFragment() {
                 val birthDateDisplay = etBirthDate.text.toString()
                 val sexDisplay = etSex.text.toString()
                 
-                // Mapowanie z polskiego (z UI) na angielski (do API)
                 val sex = when(sexDisplay) {
                     "Mężczyzna" -> "Male"
                     "Kobieta" -> "Female"
@@ -185,7 +184,6 @@ class EditProfileDialogFragment : DialogFragment() {
     }
 
     private fun showDatePicker() {
-        // Domyslna data 25 lat temu
         var selectedDate = LocalDate.now().minusYears(25)
 
         try {

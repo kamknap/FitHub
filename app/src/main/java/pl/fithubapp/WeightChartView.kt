@@ -128,13 +128,12 @@ class WeightChartView @JvmOverloads constructor(
                 gradientPath.lineTo(x, y)
             }
         }
-        // Zamknij ścieżkę do dołu
         val lastX = leftPadding + chartWidth
         gradientPath.lineTo(lastX, bottomY)
         gradientPath.lineTo(leftPadding, bottomY)
         gradientPath.close()
 
-        // Ustaw gradient
+        //  gradient
         gradientPaint.shader = LinearGradient(
             0f, topPadding,
             0f, bottomY,

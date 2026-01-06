@@ -18,7 +18,6 @@ import kotlin.math.abs
 
 class GoalsFragment : Fragment(R.layout.fragment_user_goals) {
 
-    // Views
     private lateinit var sbMainGoal: SeekBar
     private lateinit var tvTargetWeight: TextView
     private lateinit var spActivityLevel: Spinner
@@ -101,7 +100,6 @@ class GoalsFragment : Fragment(R.layout.fragment_user_goals) {
     }
 
     private fun setupFrequencySpinner() {
-        // 0..7 dni/tydz.
         val items = (0..7).map { if (it == 0) "0 dni/tydz." else "$it dni/tydz." }
         val adapter = ArrayAdapter(
             requireContext(),
@@ -252,22 +250,18 @@ class GoalsFragment : Fragment(R.layout.fragment_user_goals) {
                         )
                     )
 
-                    // Zapisz użytkownika
                     val createdUser = NetworkModule.api.createUser(createUserDto)
 
-                    // Oblicz szacowany czas trwania (w tygodniach)
                     val currentWeight = user.weight
                     val targetWeight = goals.targetWeight ?: currentWeight
                     val weightDifference = abs(currentWeight - targetWeight)
                     
-                    // Bezpieczna utrata/przyrost: 0.5kg/tydzień
                     val estimatedWeeks = if (weightDifference > 0) {
-                        (weightDifference / 0.5).toInt().coerceIn(1, 52) // minimum 1 tydzień, maksimum rok
+                        (weightDifference / 0.5).toInt().coerceIn(1, 52)
                     } else {
-                        12 // domyślnie 12 tygodni dla utrzymania wagi
+                        12
                     }
 
-                    // Oblicz cel kaloryczny na podstawie BMR i poziomu aktywności
                     val activityMultiplier = when(goals.activityLevel) {
                         1 -> 1.2   // Brak aktywności/siedzący tryb życia
                         2 -> 1.375 // Lekka aktywność (1-3 dni/tydzień)
@@ -323,8 +317,6 @@ class GoalsFragment : Fragment(R.layout.fragment_user_goals) {
             }
         }
     }
-
-    // --- Pickery ---
 
     private fun showTargetWeightPicker(weightGoal: String, currentWeight: Double?) {
         val currentWeightInt = currentWeight?.toInt() ?: 70

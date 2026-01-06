@@ -173,7 +173,7 @@ class UserProfileFragment : Fragment(R.layout.fragment_user_profile) {
         AuthManager.logout()
         Toast.makeText(context, "Zostałeś wylogowany", Toast.LENGTH_SHORT).show()
         
-        // Przekieruj do SplashActivity, które przekieruje do LoginActivity
+        // do SplashActivity, które przekieruje do LoginActivity
         val intent = Intent(requireContext(), SplashActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)

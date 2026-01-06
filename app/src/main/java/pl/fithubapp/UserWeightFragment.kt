@@ -411,12 +411,10 @@ class UserWeightFragment : Fragment(R.layout.fragment_user_weight) {
             btnRangeMonth,
             btnRangeWeek
         ).forEach { button ->
-            // Przywróć styl Outlined dla niewybranych
             button.setBackgroundColor(resources.getColor(android.R.color.transparent, null))
             button.setTextColor(resources.getColor(R.color.purple_primary, null))
         }
 
-        // Zastosuj styl filled dla wybranego
         selectedButton.setBackgroundColor(resources.getColor(R.color.purple_primary, null))
         selectedButton.setTextColor(resources.getColor(R.color.white, null))
     }

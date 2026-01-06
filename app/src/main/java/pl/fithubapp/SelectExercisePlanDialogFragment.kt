@@ -79,14 +79,12 @@ class SelectExercisePlanDialogFragment : DialogFragment() {
                         else -> "$exerciseCount ćwiczeń"
                     }
 
-                    // Podświetl aktualnie wybrany plan
                     if (plan.id == currentPlanId) {
                         (planItemView as? androidx.cardview.widget.CardView)?.apply {
                             setCardBackgroundColor(resources.getColor(R.color.blue_info_very_light, null))
                         }
                     }
 
-                    // Ustaw listener na obszar klikalny (nie na przycisk delete)
                     llPlanClickArea.setOnClickListener {
                         onPlanSelectedListener?.onPlanSelected(plan.id, plan.planName)
                         dismiss()
@@ -137,14 +135,12 @@ class SelectExercisePlanDialogFragment : DialogFragment() {
                 if (isAdded && context != null) {
                     Toast.makeText(requireContext(), "Usunięto plan: $planName", Toast.LENGTH_SHORT).show()
 
-                    // Jeśli usunięto aktualnie wybrany plan, wybierz inny
                     if (planId == currentPlanId) {
                         val remainingPlans = NetworkModule.api.getUserExercisePlans()
                         if (remainingPlans.isNotEmpty()) {
-                            // Automatycznie wybierz pierwszy dostępny plan
                             onPlanSelectedListener?.onPlanSelected(remainingPlans[0].id, remainingPlans[0].planName)
                         } else {
-                            // Brak planów - UserTrainingFragment utworzy domyślny
+                            // Brak planów - utworzy domyślny
                             onPlanSelectedListener?.onPlanSelected("", "")
                         }
                     }

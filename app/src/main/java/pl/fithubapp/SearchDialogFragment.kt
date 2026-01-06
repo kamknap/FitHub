@@ -36,10 +36,8 @@ abstract class SearchDialogFragment<T> : DialogFragment() {
         llSearchResults = mainLayout.findViewById(R.id.llSearchResults)
         val tilSearch = mainLayout.findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.tilSearch)
         
-        // Ustaw hint
         tilSearch.hint = getSearchHint()
         
-        // Ukryj pole wyszukiwania jeśli niepotrzebne
         if (!shouldShowSearchField()) {
             tilSearch.visibility = View.GONE
         }

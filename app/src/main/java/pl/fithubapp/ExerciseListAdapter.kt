@@ -61,8 +61,8 @@ class ExerciseListAdapter(
                 domStorageEnabled = true
                 cacheMode = WebSettings.LOAD_NO_CACHE
             }
-            webViewVideo.setBackgroundColor(0) // Przezroczyste tło
-            webViewVideo.setLayerType(View.LAYER_TYPE_HARDWARE, null) // Akceleracja sprzętowa
+            webViewVideo.setBackgroundColor(0) // przezroczyste
+            webViewVideo.setLayerType(View.LAYER_TYPE_HARDWARE, null)
         }
 
         fun bind(item: ExerciseItem) {

@@ -12,10 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.launch
 
-/**
- * LoginActivity - Ekran logowania i rejestracji
- * Obsługuje Firebase Authentication (email/password)
- */
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var etEmail: EditText
@@ -78,14 +74,12 @@ class LoginActivity : AppCompatActivity() {
         val tilPasswordConfirm = findViewById<com.google.android.material.textfield.TextInputLayout>(R.id.tilPasswordConfirm)
         
         if (isLoginMode) {
-            // Tryb logowania
             etPasswordConfirm.visibility = View.GONE
             tilPasswordConfirm.visibility = View.GONE
             btnLogin.text = "Zaloguj się"
             btnRegister.text = "Nie masz konta? Zarejestruj się"
             tvForgotPassword.visibility = View.VISIBLE
         } else {
-            // Tryb rejestracji
             etPasswordConfirm.visibility = View.VISIBLE
             tilPasswordConfirm.visibility = View.VISIBLE
             btnLogin.text = "Masz już konto? Zaloguj się"
@@ -237,7 +231,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun navigateToSplash() {
-        // Po zalogowaniu wracamy do Splash, który sprawdzi status i przekieruje odpowiednio
         startActivity(Intent(this, SplashActivity::class.java))
         finish()
     }
