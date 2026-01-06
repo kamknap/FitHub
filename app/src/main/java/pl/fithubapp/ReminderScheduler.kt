@@ -65,31 +65,6 @@ object ReminderScheduler {
         )
     }
 
-    fun scheduleStepSync(context: Context) {
-        val now = ZonedDateTime.now()
-        var target = now.toLocalDate().atTime(20, 0, 0).atZone(now.zone) // Godzina 20:00
-
-        if (target.isBefore(now) || target.isEqual(now)) {
-            target = target.plusDays(1)
-        }
-
-        val initialDelay = java.time.Duration.between(now, target).toMillis()
-
-        val workRequest = PeriodicWorkRequest.Builder(
-            DailyStepWorker::class.java,
-            24, TimeUnit.HOURS
-        )
-            .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
-            .addTag("DAILY_STEP_SYNC")
-            .build()
-
-        WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-            "daily_step_sync",
-            ExistingPeriodicWorkPolicy.KEEP, // na REPLACE do testów
-            workRequest
-        )
-    }
-
     fun scheduleWeightSync(context: Context) {
         val workRequest = PeriodicWorkRequest.Builder(
             DailyWeightWorker::class.java,

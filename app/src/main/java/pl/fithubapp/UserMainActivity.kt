@@ -118,8 +118,18 @@ class UserMainActivity : AppCompatActivity() {
                     measureEnabled = notifSettings?.types?.measureReminders ?: true
                 )
 
-                ReminderScheduler.scheduleStepSync(this@UserMainActivity)
                 ReminderScheduler.scheduleWeightSync(this@UserMainActivity)
+
+                lifecycleScope.launch {
+                    try {
+                        val syncResult = StepSyncHelper.syncStepsOnAppStart(this@UserMainActivity)
+                        if (syncResult.isSuccess) {
+                            Log.d("UserMainActivity", "Synchronizacja kroków: ${syncResult.getOrNull()}")
+                        }
+                    } catch (e: Exception) {
+                        Log.e("UserMainActivity", "Błąd synchronizacji kroków: ${e.message}")
+                    }
+                }
 
 
             } catch (e: Exception) {

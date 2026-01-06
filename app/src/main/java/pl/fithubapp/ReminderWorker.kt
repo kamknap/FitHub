@@ -64,42 +64,6 @@ class ReminderWorker(
     }
 }
 
-class DailyStepWorker(
-    context: Context,
-    params: WorkerParameters
-) : CoroutineWorker(context, params) {
-
-    override suspend fun doWork(): Result {
-        Log.d("DailyStepWorker", "Rozpoczynam synchronizację kroków...")
-
-        return try {
-            //Pobieranie kroków
-            val stepsLong = StepSyncHelper.getTodaySteps(applicationContext)
-            val steps = stepsLong.toInt()
-
-            Log.d("DailyStepWorker", "Pobrano kroków: $steps")
-
-            if (steps >= 1000) {
-                val syncResult = StepSyncHelper.syncStepsToDatabase(applicationContext, steps)
-
-                if (syncResult.isSuccess) {
-                    Log.i("DailyStepWorker", "Sukces: ${syncResult.getOrNull()}")
-                    Result.success()
-                } else {
-                    Log.e("DailyStepWorker", "Błąd zapisu: ${syncResult.exceptionOrNull()?.message}")
-                    Result.retry()
-                }
-            } else {
-                Log.d("DailyStepWorker", "Zbyt mało kroków ($steps), pomijam zapis.")
-                Result.success()
-            }
-        } catch (e: Exception) {
-            Log.e("DailyStepWorker", "Krytyczny błąd workera", e)
-            Result.failure()
-        }
-    }
-}
-
 class DailyWeightWorker(
     context: Context,
     params: WorkerParameters

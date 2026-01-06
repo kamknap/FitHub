@@ -74,19 +74,6 @@
                 <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
             </intent-filter>
         </activity-alias>
-        <!-- MainActivity - Do testów developerskich (opcjonalne) -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="Dev Menu">
-            <!-- Usuń LAUNCHER intent-filter - nie jest już entry pointem -->
-        </activity>
-
-        <!-- MuscleModel - Moduł wyświetlania mięśni -->
-        <activity
-            android:name=".MuscleModel"
-            android:exported="false">
-        </activity>
 
         <activity android:name="com.journeyapps.barcodescanner.CaptureActivity"
             android:screenOrientation="fullSensor"

@@ -23,7 +23,11 @@ import java.time.ZoneId
 
 object StepSyncHelper {
 
-    //Pobieranie kroków z Health Connect
+    private const val PREFS_NAME = "step_sync_prefs"
+    private const val KEY_LAST_STEPS = "last_steps"
+    private const val KEY_LAST_SYNC_DATE = "last_sync_date"
+    private const val STEP_THRESHOLD = 200
+
     suspend fun getTodaySteps(context: Context): Long {
         val client = HealthConnectClient.getOrCreate(context)
         val startTime = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()
@@ -40,14 +44,69 @@ object StepSyncHelper {
         } catch (e: Exception) { 0L }
     }
 
-    //zapis do bazy
+    suspend fun syncStepsOnAppStart(context: Context): Result<String> = withContext(Dispatchers.IO) {
+        try {
+            val steps = getTodaySteps(context).toInt()
+            if (steps < 1000) {
+                return@withContext Result.success("Zbyt mało kroków ($steps)")
+            }
+
+            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+            val today = LocalDate.now().toString()
+            val lastSyncDate = prefs.getString(KEY_LAST_SYNC_DATE, "")
+            val lastSteps = prefs.getInt(KEY_LAST_STEPS, 0)
+
+            if (today == lastSyncDate && steps < lastSteps + STEP_THRESHOLD) {
+                return@withContext Result.success("Brak wystarczającej różnicy kroków")
+            }
+
+            if (today == lastSyncDate) {
+                deleteOldStepsEntry(context)
+            }
+
+            syncStepsToDatabase(context, steps)
+
+            prefs.edit()
+                .putInt(KEY_LAST_STEPS, steps)
+                .putString(KEY_LAST_SYNC_DATE, today)
+                .apply()
+
+            Result.success("Zsynchronizowano $steps kroków")
+        } catch (e: Exception) {
+            Log.e("StepSync", "Błąd syncStepsOnAppStart: ${e.message}", e)
+            Result.failure(e)
+        }
+    }
+
+    private suspend fun deleteOldStepsEntry(context: Context) {
+        try {
+            val today = LocalDate.now().toString()
+            val dailyNutrition = NetworkModule.api.getDailyNutrition(today)
+            
+            val trainingMeals = dailyNutrition.meals.filter { meal ->
+                meal.name.lowercase().contains("trening")
+            }
+
+            for (meal in trainingMeals) {
+                for (foodItem in meal.foods) {
+                    if (foodItem.foodId.name.startsWith("Kroki (")) {
+                        NetworkModule.api.deleteFoodByItemId(today, foodItem.itemId)
+                        Log.d("StepSync", "Usunięto stary wpis kroków: ${foodItem.itemId}")
+                        return
+                    }
+                }
+            }
+        } catch (e: Exception) {
+            Log.w("StepSync", "Nie znaleziono starego wpisu kroków: ${e.message}")
+        }
+    }
+
     suspend fun syncStepsToDatabase(context: Context, steps: Int): Result<String> = withContext(
         Dispatchers.IO) {
         try {
             val user = NetworkModule.api.getCurrentUser()
             val weight = user.profile.weightKg
             
-            // Sprawdź czy waga jest poprawna
             if (weight <= 0.0) {
                 Log.w("StepSync", "Brak poprawnej wagi w profilu użytkownika")
                 return@withContext Result.failure(Exception("Brak wagi użytkownika w profilu"))
