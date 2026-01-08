@@ -3,6 +3,7 @@ package pl.fithubapp
 import android.content.Context
 import android.util.Log
 import androidx.health.connect.client.HealthConnectClient
+import androidx.health.connect.client.permission.HealthPermission
 import androidx.health.connect.client.records.StepsRecord
 import androidx.health.connect.client.request.AggregateRequest
 import androidx.health.connect.client.time.TimeRangeFilter
@@ -28,7 +29,23 @@ object StepSyncHelper {
     private const val KEY_LAST_SYNC_DATE = "last_sync_date"
     private const val STEP_THRESHOLD = 200
 
+    private suspend fun hasStepsPermission(context: Context): Boolean {
+        return try {
+            val client = HealthConnectClient.getOrCreate(context)
+            val granted = client.permissionController.getGrantedPermissions()
+            granted.contains(HealthPermission.getReadPermission(StepsRecord::class))
+        } catch (e: Exception) {
+            Log.e("StepSync", "Błąd sprawdzania uprawnień: ${e.message}")
+            false
+        }
+    }
+
     suspend fun getTodaySteps(context: Context): Long {
+        if (!hasStepsPermission(context)) {
+            Log.w("StepSync", "Brak uprawnień do odczytu kroków")
+            return 0L
+        }
+        
         val client = HealthConnectClient.getOrCreate(context)
         val startTime = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()
         val endTime = Instant.now()
@@ -41,11 +58,21 @@ object StepSyncHelper {
                 )
             )
             response[StepsRecord.COUNT_TOTAL] ?: 0L
-        } catch (e: Exception) { 0L }
+        } catch (e: SecurityException) {
+            Log.e("StepSync", "Brak uprawnień do Health Connect: ${e.message}")
+            0L
+        } catch (e: Exception) {
+            Log.e("StepSync", "Błąd odczytu kroków: ${e.message}")
+            0L
+        }
     }
 
     suspend fun syncStepsOnAppStart(context: Context): Result<String> = withContext(Dispatchers.IO) {
         try {
+            if (!hasStepsPermission(context)) {
+                return@withContext Result.success("Brak uprawnień do odczytu kroków z Health Connect")
+            }
+            
             val steps = getTodaySteps(context).toInt()
             if (steps < 1000) {
                 return@withContext Result.success("Zbyt mało kroków ($steps)")
