@@ -131,6 +131,17 @@ class UserMainActivity : AppCompatActivity() {
                     }
                 }
 
+                lifecycleScope.launch {
+                    try {
+                        val weightSyncResult = WeightSyncHelper.syncWeightOnAppStart(this@UserMainActivity)
+                        if (weightSyncResult.isSuccess) {
+                            Log.d("UserMainActivity", "Synchronizacja wagi: ${weightSyncResult.getOrNull()}")
+                        }
+                    } catch (e: Exception) {
+                        Log.e("UserMainActivity", "Błąd synchronizacji wagi: ${e.message}")
+                    }
+                }
+
 
             } catch (e: Exception) {
                 e.printStackTrace()

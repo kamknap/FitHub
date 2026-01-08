@@ -84,4 +84,20 @@ object WeightSyncHelper {
             Result.failure(e)
         }
     }
+
+    suspend fun syncWeightOnAppStart(context: Context): Result<String> = withContext(Dispatchers.IO) {
+        try {
+            val weightRecord = getLatestWeight(context)
+
+            if (weightRecord == null) {
+                return@withContext Result.success("Brak nowych danych o wadze w Health Connect")
+            }
+
+            return@withContext syncWeightToDatabase(context, weightRecord)
+
+        } catch (e: Exception) {
+            Log.e("WeightSync", "Błąd syncWeightOnAppStart: ${e.message}", e)
+            Result.failure(e)
+        }
+    }
 }
