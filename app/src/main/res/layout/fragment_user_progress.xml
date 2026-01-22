@@ -13,7 +13,6 @@
         android:orientation="vertical"
         android:padding="@dimen/spacing_normal">
 
-        <!-- Sekcja: Poziom i Punkty -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardLevelPoints"
             android:layout_width="match_parent"
@@ -30,7 +29,6 @@
                 android:padding="@dimen/spacing_normal"
                 android:gravity="center_vertical">
 
-                <!-- Poziom -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -56,7 +54,6 @@
                         tools:text="15" />
                 </LinearLayout>
 
-                <!-- Separator -->
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
@@ -64,7 +61,6 @@
                     android:layout_marginEnd="@dimen/spacing_small"
                     android:background="@color/divider" />
 
-                <!-- Punkty -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -103,7 +99,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Sekcja: Streak i Waga -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardStreakWeight"
             android:layout_width="match_parent"
@@ -120,7 +115,6 @@
                 android:padding="@dimen/spacing_normal"
                 android:gravity="center_vertical">
 
-                <!-- Streak -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -161,7 +155,6 @@
                         tools:text="14 dni" />
                 </LinearLayout>
 
-                <!-- Separator -->
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
@@ -169,7 +162,6 @@
                     android:layout_marginEnd="@dimen/spacing_small"
                     android:background="@color/divider" />
 
-                <!-- Schudnięto/Nabyto -->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -199,7 +191,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Sekcja: Aktywne wyzwanie -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardActiveChallenge"
             android:layout_width="match_parent"
@@ -258,7 +249,6 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <!-- Sekcja: Przyciski akcji -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardActions"
             android:layout_width="match_parent"
@@ -278,7 +268,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <!-- Gablota z odznakami -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnBadges"
                         android:layout_width="0dp"
@@ -295,7 +284,6 @@
                         app:iconTint="@color/purple_primary"
                         style="@style/Widget.Fithub.Button.Outlined" />
 
-                    <!-- Porównaj zdjęcia -->
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btnComparePhotos"
                         android:layout_width="0dp"
@@ -313,7 +301,6 @@
                         style="@style/Widget.Fithub.Button.Outlined" />
                 </LinearLayout>
 
-                <!-- Wyzwania -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnChallenges"
                     android:layout_width="match_parent"

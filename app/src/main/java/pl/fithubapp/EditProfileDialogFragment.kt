@@ -163,7 +163,6 @@ class EditProfileDialogFragment : DialogFragment() {
                 Log.e("EditProfile", "Błąd aktualizacji: ${e.message}", e)
                 Toast.makeText(context, "Błąd: ${e.message}", Toast.LENGTH_LONG).show()
 
-                // Włącz przyciski z powrotem w przypadku błędu
                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = true
                 alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).isEnabled = true
             }

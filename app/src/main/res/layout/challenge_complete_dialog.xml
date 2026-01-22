@@ -8,7 +8,6 @@
     android:gravity="center"
     android:background="@color/background_secondary">
 
-    <!-- Emoji/Ikona -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +15,6 @@
         android:textSize="64sp"
         android:layout_marginBottom="@dimen/spacing_normal"/>
 
-    <!-- Tytuł -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,7 +23,6 @@
         android:textColor="@color/text_primary"
         android:layout_marginBottom="@dimen/spacing_small"/>
 
-    <!-- Nazwa wyzwania -->
     <TextView
         android:id="@+id/tvChallengeName"
         android:layout_width="wrap_content"
@@ -36,7 +33,6 @@
         android:layout_marginBottom="@dimen/spacing_small"
         android:gravity="center"/>
 
-    <!-- Nazwa odznaki -->
     <TextView
         android:id="@+id/tvBadgeName"
         android:layout_width="wrap_content"
@@ -48,7 +44,6 @@
         android:layout_marginBottom="@dimen/spacing_normal"
         android:gravity="center"/>
 
-    <!-- Punkty -->
     <TextView
         android:id="@+id/tvPoints"
         android:layout_width="wrap_content"
@@ -59,7 +54,6 @@
         android:textColor="@color/green_success"
         android:layout_marginBottom="@dimen/spacing_large"/>
 
-    <!-- Przycisk OK -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnOk"
         android:layout_width="wrap_content"

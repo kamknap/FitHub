@@ -129,16 +129,15 @@ object WeightSyncHelper {
             val lastSyncDate = prefs.getString(KEY_LAST_SYNC_DATE, "")
             val lastWeight = prefs.getFloat(KEY_LAST_WEIGHT, 0f).toDouble()
 
-            // Sprawdź czy dzisiaj już synchronizowano i czy waga się zmieniła
             if (today == lastSyncDate && abs(weightInKg - lastWeight) < WEIGHT_THRESHOLD) {
                 return@withContext Result.success("Waga już zsynchronizowana dzisiaj")
             }
 
-            // Synchronizuj wagę do bazy
+            // Synchroniz wagę do bazy
             val syncResult = syncWeightToDatabase(context, weightRecord)
             
             if (syncResult.isSuccess) {
-                // Zapisz ostatnią synchronizację
+                //ostatnią synchronizacja zapis
                 prefs.edit()
                     .putFloat(KEY_LAST_WEIGHT, weightInKg.toFloat())
                     .putString(KEY_LAST_SYNC_DATE, today)

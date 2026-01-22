@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Item dla wyników wyszukiwania produktów spożywczych -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,7 +8,6 @@
     android:background="?attr/selectableItemBackground">
 
 
-    <!-- Informacje o produkcie -->
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"

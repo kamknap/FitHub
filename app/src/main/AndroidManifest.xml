@@ -26,12 +26,10 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.Fithub">
 
-        <!-- Health Connect integration -->
         <meta-data
             android:name="health_permissions"
             android:resource="@xml/health_permissions" />
 
-        <!-- SplashActivity - Entry Point aplikacji -->
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -42,21 +40,18 @@
             </intent-filter>
         </activity>
 
-        <!-- LoginActivity - Logowanie/Rejestracja -->
         <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.Fithub">
         </activity>
 
-        <!-- OnboardingActivity - Proces onboardingu -->
         <activity
             android:name=".OnboardingActivity"
             android:exported="false"
             android:theme="@style/Theme.Fithub">
         </activity>
 
-        <!-- UserMainActivity - Główna aplikacja -->
         <activity
             android:name=".UserMainActivity"
             android:exported="true"> <intent-filter>

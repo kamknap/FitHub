@@ -140,12 +140,11 @@ class SelectExercisePlanDialogFragment : DialogFragment() {
                         if (remainingPlans.isNotEmpty()) {
                             onPlanSelectedListener?.onPlanSelected(remainingPlans[0].id, remainingPlans[0].planName)
                         } else {
-                            // Brak planów - utworzy domyślny
                             onPlanSelectedListener?.onPlanSelected("", "")
                         }
                     }
 
-                    loadPlans() // Odśwież listę planów
+                    loadPlans()
                 }
             } catch (e: Exception) {
                 if (isAdded && context != null) {

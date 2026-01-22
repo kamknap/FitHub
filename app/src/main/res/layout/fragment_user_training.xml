@@ -11,7 +11,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- Nagłówek -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
@@ -21,7 +20,6 @@
             android:textColor="@color/purple_primary"
             android:layout_marginBottom="@dimen/spacing_normal" />
 
-        <!-- Karta: Aktualny plan treningowy -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cvCurrentPlan"
             style="@style/Widget.Fithub.CardView"
@@ -65,7 +63,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Karta: Akcje -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cvActions"
             style="@style/Widget.Fithub.CardView"
@@ -87,7 +84,6 @@
                     android:textColor="@color/text_primary"
                     android:layout_marginBottom="@dimen/spacing_normal" />
 
-                <!-- Przyciski dodawania ćwiczeń -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -119,7 +115,6 @@
 
                 </LinearLayout>
 
-                <!-- Przycisk zakończenia treningu -->
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSaveToDiary"
                     style="@style/Widget.Fithub.Button.Success"
@@ -132,7 +127,6 @@
 
         </androidx.cardview.widget.CardView>
 
-        <!-- Karta: Lista ćwiczeń -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cvExerciseList"
             style="@style/Widget.Fithub.CardView"

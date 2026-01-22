@@ -37,8 +37,6 @@ object ChallengeManager {
                     newCounter += 1
                 }
                 ChallengeType.WEIGHT_LOSS -> {
-                    // Dla WEIGHT_LOSS value to całkowita utrata wagi, nie przyrost
-                    // Może być ujemna jeśli użytkownik przytył
                     newCounter = (value * 10).toInt().coerceAtLeast(0)
                 }
                 ChallengeType.TRAINING_COUNT -> {

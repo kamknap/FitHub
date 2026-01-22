@@ -128,7 +128,6 @@ class GoalsFragment : Fragment(R.layout.fragment_user_goals) {
                 return@setOnClickListener
             }
 
-            // Walidacje pomocnicze (zakresy)
             if (!goals.isValidRanges()) {
                 Toast.makeText(requireContext(), "Sprawdź zakresy pól (waga 30–300 kg, aktywność 1–5, trening 0–7).", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
@@ -212,14 +211,14 @@ class GoalsFragment : Fragment(R.layout.fragment_user_goals) {
                     val roundedBMR = String.format("%.0f", bmr).toDouble()
                     val birthDateIso = user.getBirthDateAsIsoString() ?: ""
 
-                    // Pobierz Firebase UID zalogowanego użytkownika
+                    // Pobieranie Firebase UID
                     val firebaseUid = AuthManager.currentUserId
                     if (firebaseUid == null) {
                         Toast.makeText(requireContext(), "Błąd: Brak zalogowanego użytkownika", Toast.LENGTH_SHORT).show()
                         return@launch
                     }
 
-                    // Przygotuj dane użytkownika
+                    // Przygotowanie dane użytkownika
                     val createUserDto = CreateUserDto(
                         username = user.name,
                         auth = AuthData(
@@ -278,7 +277,7 @@ class GoalsFragment : Fragment(R.layout.fragment_user_goals) {
                         else -> tdee                 // utrzymanie
                     }
 
-                    // Przygotuj dane celu
+                    // Przygotowanie danych do celu
                     val createGoalDto = CreateUserGoalDto(
                         userId = createdUser.id,
                         type = when(goals.mainGoalKey) {
@@ -298,12 +297,12 @@ class GoalsFragment : Fragment(R.layout.fragment_user_goals) {
                         notes = "Utworzono podczas onboardingu"
                     )
 
-                    // Zapisz cel
+                    // Zapisanie celu
                     NetworkModule.api.createUserGoal(createGoalDto)
 
                     Toast.makeText(requireContext(), "Dane i cele zapisane", Toast.LENGTH_SHORT).show()
                     
-                    // Przekieruj do głównej aplikacji
+                    // Przekierowanie do głównego
                     val intent = Intent(requireActivity(), UserMainActivity::class.java).apply {
                         flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }

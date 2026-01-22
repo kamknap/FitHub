@@ -1,34 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ==================== KOLORY BAZOWE ==================== -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     
-    <!-- ==================== FIOLETOWY (Primary) ==================== -->
-    <!-- Główny kolor aplikacji - używany dla przycisków, nawigacji, akcentów -->
+
     <color name="purple_primary">#7C4DFF</color>
     <color name="purple_primary_dark">#651FFF</color>
     <color name="purple_primary_light">#B388FF</color>
     <color name="purple_primary_lighter">#D1C4E9</color>
     <color name="purple_primary_very_light">#EDE7F6</color>
     
-    <!-- ==================== ZIELONY (Success/Health) ==================== -->
-    <!-- Używany dla pozytywnych akcji, progresu, osiągnięć, zdrowych wyborów -->
+
     <color name="green_success">#4CAF50</color>
     <color name="green_success_dark">#388E3C</color>
     <color name="green_success_light">#81C784</color>
     <color name="green_success_lighter">#C8E6C9</color>
     <color name="green_success_very_light">#E8F5E9</color>
     
-    <!-- ==================== NIEBIESKI (Info) ==================== -->
-    <!-- Używany dla informacji, linków, wykresów -->
+
     <color name="blue_info">#2196F3</color>
     <color name="blue_info_dark">#1976D2</color>
     <color name="blue_info_light">#64B5F6</color>
     <color name="blue_info_lighter">#BBDEFB</color>
     <color name="blue_info_very_light">#E3F2FD</color>
     
-    <!-- ==================== KOLORY SEMANTYCZNE ==================== -->
     <color name="error">#F44336</color>
     <color name="error_dark">#D32F2F</color>
     <color name="error_light">#EF5350</color>
@@ -37,8 +32,7 @@
     <color name="warning_dark">#F57C00</color>
     <color name="warning_light">#FFB74D</color>
     
-    <!-- ==================== KOLORY NEUTRALNE ==================== -->
-    <!-- Szarości dla tekstu, tła, cieni -->
+
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#757575</color>
     <color name="text_tertiary">#9E9E9E</color>
@@ -51,13 +45,11 @@
     <color name="divider">#E0E0E0</color>
     <color name="divider_light">#EEEEEE</color>
     
-    <!-- ==================== KOLORY DLA TRYBU CIEMNEGO ==================== -->
     <color name="background_dark">#121212</color>
     <color name="surface_dark">#1E1E1E</color>
     <color name="surface_dark_elevated">#2C2C2C</color>
     
-    <!-- ==================== KOLORY SPECJALNE ==================== -->
-    <!-- Dla kart, overlayów, cieni -->
+
     <color name="card_background">#FFFFFF</color>
     <color name="overlay_light">#1A000000</color>
     <color name="overlay_medium">#4D000000</color>
@@ -66,7 +58,6 @@
     <color name="ripple_light">#1F000000</color>
     <color name="ripple_dark">#33FFFFFF</color>
     
-    <!-- ==================== STARE KOLORY (do usunięcia po migracji) ==================== -->
     <color name="primary">#FF009688</color>
     <color name="primary_dark">#FF00796B</color>
     <color name="primary_light">#FFC5E1A5</color>

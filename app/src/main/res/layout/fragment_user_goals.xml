@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <!-- 0. Nagłówek -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
@@ -20,7 +19,6 @@
             android:textColor="@color/purple_primary"
             android:layout_marginBottom="@dimen/spacing_large" />
 
-        <!-- 1. Cel główny (suwak 3-pozycyjny) -->
         <TextView
             android:id="@+id/tvGoalLabel"
             android:layout_width="match_parent"
@@ -30,7 +28,6 @@
             android:textColor="@color/text_primary"
             android:layout_marginBottom="@dimen/spacing_small" />
 
-        <!-- W UI pokażemy 3 etykiety pod suwakiem: Schudnąć | Utrzymać | Przytyć -->
         <SeekBar
             android:id="@+id/sbMainGoal"
             android:layout_width="match_parent"
@@ -73,7 +70,6 @@
         </LinearLayout>
 
 
-        <!-- 2. Docelowa waga  -->
         <TextView
             android:id="@+id/tvDetailedGoalLabel"
             android:layout_width="match_parent"
@@ -84,7 +80,6 @@
             android:layout_marginBottom="@dimen/spacing_small"
             android:layout_marginTop="@dimen/spacing_normal" />
 
-        <!-- Pole dla docelowej wagi -->
         <TextView
             android:id="@+id/tvTargetWeight"
             android:layout_width="match_parent"
@@ -97,7 +92,6 @@
             android:background="@color/white"
             android:inputType="numberDecimal" />
 
-        <!-- 4. Poziom aktywności fizycznej (1–5) -->
         <TextView
             android:id="@+id/tvActivityLabel"
             android:layout_width="match_parent"
@@ -117,7 +111,6 @@
 
 
 
-        <!-- 6. Częstotliwość treningów (dropdown) -->
         <TextView
             android:id="@+id/tvFrequencyLabel"
             android:layout_width="match_parent"
@@ -135,7 +128,6 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/spacing_normal" />
 
-        <!-- 7. Powiadomienia -->
         <TextView
             android:id="@+id/tvNotificationsLabel"
             android:layout_width="match_parent"
@@ -176,7 +168,6 @@
             android:buttonTint="@color/purple_primary"
             android:layout_marginBottom="@dimen/spacing_normal" />
 
-        <!-- Przycisk zatwierdzający -->
         <Button
             android:id="@+id/btnConfirmGoals"
             style="@style/Widget.Fithub.Button"

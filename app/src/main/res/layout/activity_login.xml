@@ -15,7 +15,6 @@
         android:padding="@dimen/spacing_large"
         android:gravity="center_horizontal">
 
-        <!-- Logo/Tytuł -->
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
@@ -35,7 +34,6 @@
             android:textColor="@color/text_secondary"
             android:layout_marginTop="@dimen/spacing_small" />
 
-        <!-- Email Input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmail"
             style="@style/Widget.Fithub.TextInputLayout"
@@ -56,7 +54,6 @@
                 android:textColorHint="@color/text_tertiary" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Password Input -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilPassword"
             style="@style/Widget.Fithub.TextInputLayout"
@@ -78,7 +75,6 @@
                 android:textColorHint="@color/text_tertiary" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Password Confirm Input (dla rejestracji) -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilPasswordConfirm"
             style="@style/Widget.Fithub.TextInputLayout"
@@ -101,7 +97,6 @@
                 android:textColorHint="@color/text_tertiary" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Forgot Password -->
         <TextView
             android:id="@+id/tvForgotPassword"
             android:layout_width="wrap_content"
@@ -116,7 +111,6 @@
             android:focusable="true"
             android:background="?attr/selectableItemBackgroundBorderless" />
 
-        <!-- Login Button -->
         <Button
             android:id="@+id/btnLogin"
             style="@style/Widget.Fithub.Button"
@@ -125,7 +119,6 @@
             android:text="Zaloguj się"
             android:layout_marginTop="@dimen/spacing_large" />
 
-        <!-- Register Button -->
         <Button
             android:id="@+id/btnRegister"
             style="@style/Widget.Fithub.Button.Success"
@@ -134,7 +127,6 @@
             android:text="Zarejestruj się"
             android:layout_marginTop="@dimen/spacing_medium" />
 
-        <!-- Progress Bar -->
         <ProgressBar
             android:id="@+id/progressBar"
             style="@style/Widget.Fithub.ProgressBar.Circular"

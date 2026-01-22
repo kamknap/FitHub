@@ -124,7 +124,6 @@ class UserProgressFragment : Fragment(R.layout.fragment_user_progress) {
                     tvUserWeightChangeLabel.text = result.label
                     tvUserWeightChange.text = result.value
                     
-                    // Kolorowanie na podstawie celu
                     val weightColor = when {
                         result.value.startsWith("-") -> requireContext().getColor(R.color.green_success) // Schudnięto
                         result.value.startsWith("+") -> requireContext().getColor(R.color.error) // Przybyło

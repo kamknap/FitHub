@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- ==================== SPACING ==================== -->
-    <!-- Konsystentne odstępy używane w całej aplikacji -->
+
     <dimen name="spacing_tiny">4dp</dimen>
     <dimen name="spacing_small">8dp</dimen>
     <dimen name="spacing_medium">12dp</dimen>
@@ -10,20 +9,17 @@
     <dimen name="spacing_xlarge">32dp</dimen>
     <dimen name="spacing_xxlarge">48dp</dimen>
     
-    <!-- ==================== CARD PROPERTIES ==================== -->
     <dimen name="card_corner_radius">16dp</dimen>
     <dimen name="card_elevation">4dp</dimen>
     <dimen name="card_padding">16dp</dimen>
     <dimen name="card_margin">12dp</dimen>
     
-    <!-- ==================== BUTTON PROPERTIES ==================== -->
     <dimen name="button_corner_radius">12dp</dimen>
     <dimen name="button_height">48dp</dimen>
     <dimen name="button_padding_horizontal">24dp</dimen>
     <dimen name="button_padding_vertical">12dp</dimen>
     <dimen name="button_elevation">2dp</dimen>
     
-    <!-- ==================== TEXT SIZES ==================== -->
     <dimen name="text_size_headline1">32sp</dimen>
     <dimen name="text_size_headline2">24sp</dimen>
     <dimen name="text_size_headline3">20sp</dimen>
@@ -32,34 +28,27 @@
     <dimen name="text_size_caption">12sp</dimen>
     <dimen name="text_size_small">10sp</dimen>
     
-    <!-- ==================== ICON SIZES ==================== -->
     <dimen name="icon_size_small">16dp</dimen>
     <dimen name="icon_size_medium">24dp</dimen>
     <dimen name="icon_size_large">32dp</dimen>
     <dimen name="icon_size_xlarge">48dp</dimen>
     
-    <!-- ==================== DIALOG PROPERTIES ==================== -->
     <dimen name="dialog_corner_radius">20dp</dimen>
     <dimen name="dialog_padding">24dp</dimen>
     
-    <!-- ==================== LIST ITEM PROPERTIES ==================== -->
     <dimen name="list_item_height">72dp</dimen>
     <dimen name="list_item_padding">16dp</dimen>
     <dimen name="list_item_spacing">8dp</dimen>
     
-    <!-- ==================== INPUT FIELDS ==================== -->
     <dimen name="input_corner_radius">12dp</dimen>
     <dimen name="input_stroke_width">2dp</dimen>
     <dimen name="input_min_height">56dp</dimen>
     
-    <!-- ==================== PROGRESS BAR ==================== -->
     <dimen name="progress_bar_height">8dp</dimen>
     <dimen name="progress_bar_corner_radius">8dp</dimen>
     
-    <!-- ==================== DIVIDER ==================== -->
     <dimen name="divider_height">1dp</dimen>
     
-    <!-- ==================== BOTTOM NAVIGATION ==================== -->
     <dimen name="bottom_nav_height">56dp</dimen>
     <dimen name="bottom_nav_elevation">8dp</dimen>
 </resources>

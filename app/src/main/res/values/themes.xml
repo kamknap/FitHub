@@ -1,52 +1,42 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- ==================== BASE APPLICATION THEME ==================== -->
-    <!-- Używamy Theme.Material3.Light zamiast DayNight aby wyłączyć tryb ciemny -->
+
     <style name="Base.Theme.Fithub" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Primary colors - Fioletowy -->
         <item name="colorPrimary">@color/purple_primary</item>
         <item name="colorPrimaryVariant">@color/purple_primary_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorPrimaryContainer">@color/purple_primary_very_light</item>
         <item name="colorOnPrimaryContainer">@color/purple_primary_dark</item>
         
-        <!-- Secondary colors - Zielony -->
         <item name="colorSecondary">@color/green_success</item>
         <item name="colorSecondaryVariant">@color/green_success_dark</item>
         <item name="colorOnSecondary">@color/white</item>
         <item name="colorSecondaryContainer">@color/green_success_very_light</item>
         <item name="colorOnSecondaryContainer">@color/green_success_dark</item>
         
-        <!-- Tertiary colors - Niebieski -->
         <item name="colorTertiary">@color/blue_info</item>
         <item name="colorTertiaryContainer">@color/blue_info_very_light</item>
         <item name="colorOnTertiaryContainer">@color/blue_info_dark</item>
         
-        <!-- Background colors -->
         <item name="android:colorBackground">@color/background_secondary</item>
         <item name="colorSurface">@color/background_primary</item>
         <item name="colorOnSurface">@color/text_primary</item>
         <item name="colorSurfaceVariant">@color/background_tertiary</item>
         <item name="colorOnSurfaceVariant">@color/text_secondary</item>
         
-        <!-- Error colors -->
         <item name="colorError">@color/error</item>
         <item name="colorOnError">@color/white</item>
         <item name="colorErrorContainer">@color/error_light</item>
         
-        <!-- Text colors -->
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="android:textColorTertiary">@color/text_tertiary</item>
         
-        <!-- Status bar - jasny z ciemnym tekstem -->
         <item name="android:statusBarColor">@color/background_secondary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
         
-        <!-- Navigation bar -->
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
         
-        <!-- Material Components -->
         <item name="materialButtonStyle">@style/Widget.Fithub.Button</item>
         <item name="materialCardViewStyle">@style/Widget.Fithub.CardView</item>
         <item name="textInputStyle">@style/Widget.Fithub.TextInputLayout</item>
@@ -56,14 +46,11 @@
 
     <style name="Theme.Fithub" parent="Base.Theme.Fithub" />
     
-    <!-- ==================== SPLASH THEME (ciemne tło) ==================== -->
     <style name="Theme.Fithub.Splash" parent="Base.Theme.Fithub">
-        <!-- Status bar - ciemny z jasnym tekstem dla ekranu Splash -->
         <item name="android:statusBarColor">@color/purple_primary</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
     
-    <!-- ==================== BUTTON STYLES ==================== -->
     <style name="Widget.Fithub.Button" parent="Widget.Material3.Button">
         <item name="android:textColor">@color/white</item>
         <item name="backgroundTint">@color/purple_primary</item>
@@ -101,7 +88,6 @@
         <item name="backgroundTint">@color/blue_info</item>
     </style>
     
-    <!-- ==================== CARD STYLES ==================== -->
     <style name="Widget.Fithub.CardView" parent="Widget.Material3.CardView.Elevated">
         <item name="cardBackgroundColor">@color/card_background</item>
         <item name="cardCornerRadius">16dp</item>
@@ -117,7 +103,6 @@
         <item name="contentPadding">16dp</item>
     </style>
     
-    <!-- ==================== TEXT INPUT STYLES ==================== -->
     <style name="Widget.Fithub.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/purple_primary</item>
         <item name="boxStrokeWidth">2dp</item>
@@ -136,7 +121,6 @@
         <item name="android:textColorHint">@color/text_tertiary</item>
     </style>
     
-    <!-- ==================== TEXT STYLES ==================== -->
     <style name="TextAppearance.Fithub.Headline1" parent="TextAppearance.Material3.HeadlineLarge">
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
@@ -170,7 +154,6 @@
         <item name="android:textColor">@color/text_tertiary</item>
     </style>
     
-    <!-- ==================== BOTTOM NAVIGATION STYLE ==================== -->
     <style name="Widget.Fithub.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
         <item name="itemIconTint">@color/bottom_nav_color</item>
         <item name="itemTextColor">@color/bottom_nav_color</item>
@@ -179,7 +162,6 @@
         <item name="labelVisibilityMode">labeled</item>
     </style>
     
-    <!-- ==================== DIALOG STYLES ==================== -->
     <style name="ThemeOverlay.Fithub.Dialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
         <item name="colorPrimary">@color/purple_primary</item>
         <item name="colorSecondary">@color/purple_primary</item>
@@ -214,7 +196,6 @@
         <item name="android:textSize">16sp</item>
     </style>
     
-    <!-- ==================== PROGRESSBAR STYLES ==================== -->
     <style name="Widget.Fithub.ProgressBar.Horizontal" parent="Widget.Material3.LinearProgressIndicator">
         <item name="trackColor">@color/purple_primary_very_light</item>
         <item name="indicatorColor">@color/purple_primary</item>
@@ -227,7 +208,6 @@
         <item name="trackColor">@color/purple_primary_very_light</item>
     </style>
     
-    <!-- ==================== NUMBER PICKER STYLE ==================== -->
     <style name="ThemeOverlay.Fithub.NumberPicker" parent="ThemeOverlay.Fithub.Dialog">
         <!-- Wyraźne kolory dla NumberPicker w dialogu -->
         <item name="android:textColorPrimary">@color/text_primary</item>
@@ -235,7 +215,6 @@
         <item name="colorAccent">@color/purple_primary</item>
     </style>
     
-    <!-- ==================== SPINNER STYLE ==================== -->
     <style name="Widget.Fithub.Spinner" parent="Widget.AppCompat.Spinner">
         <item name="android:background">@color/white</item>
         <item name="android:padding">@dimen/spacing_medium</item>

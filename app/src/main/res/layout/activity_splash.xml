@@ -14,7 +14,6 @@
         android:gravity="center_horizontal"
         android:layout_centerInParent="true">
 
-        <!-- Logo lub nazwa aplikacji -->
         <TextView
             android:id="@+id/tvAppName"
             android:layout_width="wrap_content"
@@ -33,7 +32,6 @@
             android:textColor="@color/purple_primary_lighter"
             android:layout_marginTop="@dimen/spacing_small" />
 
-        <!-- Progress indicator -->
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
