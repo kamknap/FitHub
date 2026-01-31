@@ -53,4 +53,16 @@ object AuthManager {
             Result.failure(e)
         }
     }
+
+    suspend fun loginWithGoogle(idToken: String): Result<FirebaseUser> {
+        return try {
+            val credential = com.google.firebase.auth.GoogleAuthProvider.getCredential(idToken, null)
+            val result = auth.signInWithCredential(credential).await()
+            result.user?.let {
+                Result.success(it)
+            } ?: Result.failure(Exception("Google login returned null"))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 }

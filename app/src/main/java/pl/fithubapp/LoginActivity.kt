@@ -1,5 +1,6 @@
 package pl.fithubapp
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,9 +9,17 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
+import pl.fithubapp.data.GoogleLoginRequest
+import pl.fithubapp.data.GoogleLoginResponse
 
 class LoginActivity : AppCompatActivity() {
 
@@ -19,9 +28,11 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var etPasswordConfirm: EditText
     private lateinit var btnLogin: Button
     private lateinit var btnRegister: Button
+    private lateinit var btnGoogleLogin: MaterialButton
     private lateinit var tvForgotPassword: TextView
     private lateinit var progressBar: ProgressBar
 
+    private lateinit var googleSignInClient: GoogleSignInClient
     private var isLoginMode = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +40,38 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
         initViews()
+        setupGoogleSignIn()
         setupClickListeners()
         updateUIMode()
+    }
+
+    private fun setupGoogleSignIn() {
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("445598699072-hi249lsgg324c7r1u942vckqdtctbpag.apps.googleusercontent.com")
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
+    }
+
+    private val googleSignInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            try {
+                val account = task.getResult(ApiException::class.java)
+                val idToken = account.idToken
+                
+                if (idToken != null) {
+                    performBackendGoogleLogin(idToken)
+                } else {
+                    Toast.makeText(this, "Nie udało się uzyskać tokena", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: ApiException) {
+                Toast.makeText(this, "Logowanie Google nieudane: ${e.statusCode}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun initViews() {
@@ -39,6 +80,7 @@ class LoginActivity : AppCompatActivity() {
         etPasswordConfirm = findViewById(R.id.etPasswordConfirm)
         btnLogin = findViewById(R.id.btnLogin)
         btnRegister = findViewById(R.id.btnRegister)
+        btnGoogleLogin = findViewById(R.id.btnGoogleLogin)
         tvForgotPassword = findViewById(R.id.tvForgotPassword)
         progressBar = findViewById(R.id.progressBar)
     }
@@ -62,6 +104,53 @@ class LoginActivity : AppCompatActivity() {
 
         tvForgotPassword.setOnClickListener {
             performPasswordReset()
+        }
+
+        btnGoogleLogin.setOnClickListener {
+            performGoogleSignIn()
+        }
+    }
+
+    private fun performGoogleSignIn() {
+        setLoading(true)
+        val signInIntent = googleSignInClient.signInIntent
+        googleSignInLauncher.launch(signInIntent)
+        setLoading(false)
+    }
+
+    private fun performBackendGoogleLogin(idToken: String) {
+        setLoading(true)
+        lifecycleScope.launch {
+            try {
+                val firebaseResult = AuthManager.loginWithGoogle(idToken)
+                
+                firebaseResult.onSuccess {
+                    val response = NetworkModule.api.googleLogin(GoogleLoginRequest(idToken))
+                    
+                    when {
+                        response.isSuccessful && response.body() != null -> {
+                            val loginResult = response.body()!!
+                            Toast.makeText(this@LoginActivity, "Witaj ${loginResult.user.username}!", Toast.LENGTH_SHORT).show()
+                            navigateToSplash()
+                        }
+                        response.code() == 404 -> {
+                            setLoading(false)
+                            Toast.makeText(this@LoginActivity, "Witaj! Uzupełnij swój profil", Toast.LENGTH_SHORT).show()
+                            navigateToOnboarding()
+                        }
+                        else -> {
+                            setLoading(false)
+                            Toast.makeText(this@LoginActivity, "Błąd serwera: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }.onFailure { exception ->
+                    setLoading(false)
+                    Toast.makeText(this@LoginActivity, "Błąd Firebase: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                setLoading(false)
+                Toast.makeText(this@LoginActivity, "Błąd połączenia: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

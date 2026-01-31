@@ -1,8 +1,8 @@
 package pl.fithubapp
 
 import pl.fithubapp.data.*
+import retrofit2.Response
 import retrofit2.http.*
-
 
 interface ApiService {
     @GET("/api/users")
@@ -147,4 +147,8 @@ interface ApiService {
     // Challenges endpoints
     @GET("/api/challenges")
     suspend fun getAllChallenges(): List<ChallengeDto>
+
+    //Logowanie Google
+    @POST("/api/users/google-login")
+    suspend fun googleLogin(@Body request: GoogleLoginRequest): Response<GoogleLoginResponse>
 }
