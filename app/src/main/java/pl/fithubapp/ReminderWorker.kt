@@ -73,22 +73,15 @@ class DailyWeightWorker(
         Log.d("DailyWeightWorker", "Rozpoczynam sprawdzanie wagi w Health Connect...")
 
         return try {
-            //Pobieranie wagi
-            val latestWeight = WeightSyncHelper.getLatestWeight(applicationContext)
 
-            if (latestWeight != null) {
-                val syncResult = WeightSyncHelper.syncWeightToDatabase(applicationContext, latestWeight)
+            val syncResult = WeightSyncHelper.syncWeightOnAppStart(applicationContext)
 
-                if (syncResult.isSuccess) {
-                    Log.i("DailyWeightWorker", "Sukces: ${syncResult.getOrNull()}")
-                    Result.success()
-                } else {
-                    Log.e("DailyWeightWorker", "Błąd synchronizacji: ${syncResult.exceptionOrNull()?.message}")
-                    Result.retry()
-                }
-            } else {
-                Log.d("DailyWeightWorker", "Brak pomiarów wagi w Health Connect z ostatnich 30 dni.")
+            if (syncResult.isSuccess) {
+                Log.i("DailyWeightWorker", "Status: ${syncResult.getOrNull()}")
                 Result.success()
+            } else {
+                Log.e("DailyWeightWorker", "Błąd synchronizacji: ${syncResult.exceptionOrNull()?.message}")
+                Result.retry()
             }
         } catch (e: Exception) {
             Log.e("DailyWeightWorker", "Krytyczny błąd workera wagi", e)

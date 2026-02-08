@@ -8,6 +8,8 @@ import androidx.health.connect.client.records.WeightRecord
 import androidx.health.connect.client.request.ReadRecordsRequest
 import androidx.health.connect.client.time.TimeRangeFilter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import pl.fithubapp.data.CreateWeightMeasurementDto
 import pl.fithubapp.data.UpdateProfileData
@@ -18,12 +20,14 @@ import java.time.ZoneId
 import kotlin.math.abs
 
 object WeightSyncHelper {
-    
+
     private const val PREFS_NAME = "weight_sync_prefs"
     private const val KEY_LAST_WEIGHT = "last_weight"
     private const val KEY_LAST_SYNC_DATE = "last_sync_date"
-    private const val WEIGHT_THRESHOLD = 0.1 // 0.1 kg różnicy
-    
+    private const val WEIGHT_THRESHOLD = 0.1
+
+    private val mutex = Mutex()
+
     private suspend fun hasWeightPermission(context: Context): Boolean {
         return try {
             val client = HealthConnectClient.getOrCreate(context)
@@ -34,17 +38,14 @@ object WeightSyncHelper {
             false
         }
     }
-    
+
     suspend fun getLatestWeight(context: Context): WeightRecord? {
-        if (!hasWeightPermission(context)) {
-            Log.w("WeightSync", "Brak uprawnień do odczytu wagi")
-            return null
-        }
-        
+        if (!hasWeightPermission(context)) return null
+
         val client = HealthConnectClient.getOrCreate(context)
 
         val startTime = LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()
-        val endTime = Instant.now()
+        val endTime = LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault()).toInstant()
 
         return try {
             val response = client.readRecords(
@@ -56,9 +57,6 @@ object WeightSyncHelper {
                 )
             )
             response.records.firstOrNull()
-        } catch (e: SecurityException) {
-            Log.e("WeightSync", "Brak uprawnień do Health Connect: ${e.message}")
-            null
         } catch (e: Exception) {
             Log.e("WeightSync", "Błąd odczytu z Health Connect: ${e.message}")
             null
@@ -79,8 +77,7 @@ object WeightSyncHelper {
             }
 
             if (alreadyExistsToday) {
-                Log.d("WeightSync", "Pomiar z dnia $recordDate już istnieje w bazie - pomijam.")
-                return@withContext Result.success("Pominięto - pomiar z dzisiaj już istnieje.")
+                return@withContext Result.success("Pominięto - pomiar z dnia $recordDate już istnieje.")
             }
 
             val user = NetworkModule.api.getCurrentUser()
@@ -112,45 +109,45 @@ object WeightSyncHelper {
     }
 
     suspend fun syncWeightOnAppStart(context: Context): Result<String> = withContext(Dispatchers.IO) {
-        try {
-            if (!hasWeightPermission(context)) {
-                return@withContext Result.success("Brak uprawnień do odczytu wagi z Health Connect")
+        mutex.withLock {
+            try {
+                if (!hasWeightPermission(context)) {
+                    return@withLock Result.success("Brak uprawnień")
+                }
+
+                val weightRecord = getLatestWeight(context)
+                if (weightRecord == null) {
+                    return@withLock Result.success("Brak danych w Health Connect")
+                }
+
+                val weightInKg = weightRecord.weight.inKilograms
+                val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+                val today = LocalDate.now().toString()
+
+                val lastSyncDate = prefs.getString(KEY_LAST_SYNC_DATE, "")
+                val lastWeight = prefs.getFloat(KEY_LAST_WEIGHT, 0f).toDouble()
+
+                if (today == lastSyncDate && abs(weightInKg - lastWeight) < WEIGHT_THRESHOLD) {
+                    return@withLock Result.success("Waga już zsynchronizowana dzisiaj")
+                }
+
+                val syncResult = syncWeightToDatabase(context, weightRecord)
+
+                if (syncResult.isSuccess) {
+                    prefs.edit()
+                        .putFloat(KEY_LAST_WEIGHT, weightInKg.toFloat())
+                        .putString(KEY_LAST_SYNC_DATE, today)
+                        .apply()
+
+                    Result.success("Zsynchronizowano wagę: ${String.format("%.1f", weightInKg)} kg")
+                } else {
+                    syncResult
+                }
+
+            } catch (e: Exception) {
+                Log.e("WeightSync", "Błąd syncWeightOnAppStart: ${e.message}", e)
+                Result.failure(e)
             }
-            
-            val weightRecord = getLatestWeight(context)
-
-            if (weightRecord == null) {
-                return@withContext Result.success("Brak nowych danych o wadze w Health Connect")
-            }
-
-            val weightInKg = weightRecord.weight.inKilograms
-            val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            val today = LocalDate.now().toString()
-            val lastSyncDate = prefs.getString(KEY_LAST_SYNC_DATE, "")
-            val lastWeight = prefs.getFloat(KEY_LAST_WEIGHT, 0f).toDouble()
-
-            if (today == lastSyncDate && abs(weightInKg - lastWeight) < WEIGHT_THRESHOLD) {
-                return@withContext Result.success("Waga już zsynchronizowana dzisiaj")
-            }
-
-            // Synchroniz wagę do bazy
-            val syncResult = syncWeightToDatabase(context, weightRecord)
-            
-            if (syncResult.isSuccess) {
-                //ostatnią synchronizacja zapis
-                prefs.edit()
-                    .putFloat(KEY_LAST_WEIGHT, weightInKg.toFloat())
-                    .putString(KEY_LAST_SYNC_DATE, today)
-                    .apply()
-                
-                Result.success("Zsynchronizowano wagę: ${String.format("%.1f", weightInKg)} kg")
-            } else {
-                syncResult
-            }
-
-        } catch (e: Exception) {
-            Log.e("WeightSync", "Błąd syncWeightOnAppStart: ${e.message}", e)
-            Result.failure(e)
         }
     }
 }

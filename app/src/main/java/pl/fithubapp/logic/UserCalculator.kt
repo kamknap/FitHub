@@ -30,8 +30,8 @@ class UserCalculator {
     fun calculateBMR(weight: Double, height: Double, age: Double, sex: String): Double?{
         if (weight <= 0 || height <= 0 || age <= 0) return null
         return when (sex) {
-            "Male" -> (13.397 * height) + (4.799 * weight) - (5.677 * age) + 88.362
-            "Female" -> (9.247 * height) + (3.098 * weight) - (4.330 * age) + 447.593
+            "Male" -> (13.397 * weight) + (4.799 * height) - (5.677 * age) + 88.362
+            "Female" -> (9.247 * weight) + (3.098 * height) - (4.330 * age) + 447.593
             else -> null
         }
     }

@@ -118,7 +118,7 @@ class UserMainActivity : AppCompatActivity() {
                     measureEnabled = notifSettings?.types?.measureReminders ?: true
                 )
 
-                ReminderScheduler.scheduleWeightSync(this@UserMainActivity)
+//                ReminderScheduler.scheduleWeightSync(this@UserMainActivity)
 
                 lifecycleScope.launch {
                     try {
