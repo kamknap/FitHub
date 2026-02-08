@@ -120,25 +120,22 @@ class UserMainActivity : AppCompatActivity() {
 
 //                ReminderScheduler.scheduleWeightSync(this@UserMainActivity)
 
-                lifecycleScope.launch {
+                launch {
                     try {
-                        val syncResult = StepSyncHelper.syncStepsOnAppStart(this@UserMainActivity)
-                        if (syncResult.isSuccess) {
-                            Log.d("UserMainActivity", "Synchronizacja kroków: ${syncResult.getOrNull()}")
-                        }
-                    } catch (e: Exception) {
-                        Log.e("UserMainActivity", "Błąd synchronizacji kroków: ${e.message}")
-                    }
+                        StepSyncHelper.syncStepsOnAppStart(this@UserMainActivity)
+                    } catch (e: Exception) { Log.e("Main", "Steps error", e) }
                 }
 
-                lifecycleScope.launch {
+                launch {
                     try {
                         val weightSyncResult = WeightSyncHelper.syncWeightOnAppStart(this@UserMainActivity)
                         if (weightSyncResult.isSuccess) {
-                            Log.d("UserMainActivity", "Synchronizacja wagi: ${weightSyncResult.getOrNull()}")
+                            Log.d("UserMainActivity", "Sync wagi OK: ${weightSyncResult.getOrNull()}")
+                        } else {
+                            Log.d("UserMainActivity", "Sync wagi pominięty/błąd: ${weightSyncResult.exceptionOrNull()?.message}")
                         }
                     } catch (e: Exception) {
-                        Log.e("UserMainActivity", "Błąd synchronizacji wagi: ${e.message}")
+                        Log.e("UserMainActivity", "Błąd wywołania sync wagi: ${e.message}")
                     }
                 }
 
