@@ -15,7 +15,7 @@ object ChallengeManager {
             val allChallenges = NetworkModule.api.getAllChallenges()
             val challengeDef = allChallenges.find { it.id == activeChallenge.challengeId } ?: return
 
-            // Naprawa dla starych wyzwań WEIGHT_LOSS z niepoprawnym totalToFinish
+            // dla starych wyzwań WEIGHT_LOSS z niepoprawnym totalToFinish
             if (challengeDef.type == ChallengeType.WEIGHT_LOSS && activeChallenge.totalToFinish < 10) {
                 val correctedTotalToFinish = challengeDef.targetValue * 10
                 activeChallenge = activeChallenge.copy(totalToFinish = correctedTotalToFinish)
